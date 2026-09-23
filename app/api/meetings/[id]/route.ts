@@ -24,7 +24,7 @@ export async function GET(
   }
 
   const meeting: SacramentMeeting | null =
-    getMeetingById(meetingId);
+  await getMeetingById(meetingId);
 
   if (!meeting) {
     return NextResponse.json(
