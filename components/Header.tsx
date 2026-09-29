@@ -12,9 +12,9 @@ export default function Header() {
     <header className="border-b border-gray-200 bg-white">
       <div className="mx-auto flex max-w-5xl flex-col gap-4 px-6 py-5 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h1 className="text-xl font-semibold text-slate-800">
+          <p className="text-xl font-semibold text-slate-800">
             Sacrament Meeting Planner
-          </h1>
+          </p>
           <p className="text-sm text-gray-500">
             Example Ward · {currentDate}
           </p>
