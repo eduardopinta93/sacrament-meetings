@@ -6,6 +6,13 @@ import {
   getMeetings,
   getMeetingsTotalPages,
 } from '@/lib/meetings-db';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Sacrament Meetings | Sacrament Meeting Planner',
+  description:
+    'View current and past sacrament meeting programs and schedules.',
+};
 
 export default async function MeetingsPage(props: {
   searchParams?: Promise<{ query?: string; page?: string }>;
