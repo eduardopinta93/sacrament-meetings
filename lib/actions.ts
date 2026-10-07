@@ -1,5 +1,5 @@
 'use server';
-
+import { auth } from '@/auth';
 import { z } from 'zod';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
@@ -177,6 +177,12 @@ export async function updateMeeting(
 }
 
 export async function deleteMeeting(id: number): Promise<void> {
+  const session = await auth();
+
+  if (!session?.user) {
+    redirect('/login');
+  }
+
   try {
     await deleteMeetingFromDb(id);
   } catch (error) {

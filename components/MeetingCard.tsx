@@ -1,13 +1,16 @@
 import Link from 'next/link';
-import { deleteMeeting } from '@/lib/actions';
 
+import { auth } from '@/auth';
+import { deleteMeeting } from '@/lib/actions';
 import type { SacramentMeeting } from '@/lib/types';
 
 interface MeetingCardProps {
   meeting: SacramentMeeting;
 }
 
-export default function MeetingCard({ meeting }: MeetingCardProps) {
+export default async function MeetingCard({ meeting }: MeetingCardProps) {
+  const session = await auth();
+
   const formattedDate = new Intl.DateTimeFormat('en-US', {
     weekday: 'long',
     year: 'numeric',
@@ -41,21 +44,25 @@ export default function MeetingCard({ meeting }: MeetingCardProps) {
             View details
           </Link>
 
-          <Link
-            href={`/meetings/${meeting.id}/edit`}
-            className="rounded-md border border-slate-300 bg-white px-4 py-2 text-center text-sm font-medium text-slate-700 transition-colors hover:bg-slate-50"
-          >
-            Edit
-          </Link>
+          {session?.user && (
+            <>
+              <Link
+                href={`/meetings/${meeting.id}/edit`}
+                className="rounded-md border border-slate-300 bg-white px-4 py-2 text-center text-sm font-medium text-slate-700 transition-colors hover:bg-slate-50"
+              >
+                Edit
+              </Link>
 
-          <form action={deleteMeeting.bind(null, meeting.id)}>
-            <button
-              type="submit"
-              className="rounded-md border border-red-300 bg-white px-4 py-2 text-sm font-medium text-red-700 transition-colors hover:bg-red-50"
-            >
-              Delete
-            </button>
-          </form>
+              <form action={deleteMeeting.bind(null, meeting.id)}>
+                <button
+                  type="submit"
+                  className="rounded-md border border-red-300 bg-white px-4 py-2 text-sm font-medium text-red-700 transition-colors hover:bg-red-50"
+                >
+                  Delete
+                </button>
+              </form>
+            </>
+          )}
         </div>
       </div>
     </article>
